@@ -1,18 +1,22 @@
 <!doctype html>
 <html>
-  <head>
-    <meta charset="utf-8">
-    <link rel="stylesheet" href="{{ "/assets/style.css" | relative_url }}">
-    <title>{{ page.title }}</title>
-  </head>
-  <body>
-    <header>
-      <img style="height: 2.5rem" src="{{ "/assets/trees_small.png" | relative_url }}">
-      <a class="site-title" href="/">Tell me I'm wrong.</a>
-      <span class="site-sub-title">And why.</span>
-    </header>
-    <main>
-      {{ content }}
-    </main>
-  </body>
+	<head>
+		<meta charset="utf-8">
+		<link rel="stylesheet" href="{{ "/assets/style.css" | relative_url }}">
+		<title>{{ page.title }}</title>
+	</head>
+	<body>
+		<header>
+			<img src="{{ "/assets/trees_small.png" | relative_url }}">
+			<div style="display: flex; align-items: flex-end; padding-left: 0.2rem">
+				<span>
+					<a class="site-title" href="/">Tell me I'm wrong.</a>
+					<span class="site-sub-title">And why.</span>
+				</span>
+			</div>
+		</header>
+		<main>
+			{{ content }}
+		</main>
+	</body>
 </html>
