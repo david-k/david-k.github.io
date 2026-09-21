@@ -1,0 +1,88 @@
+h1, h2, h3, ul, li {
+	margin: 0;
+	padding: 0;
+}
+
+p, ul, h1, h2 {
+	margin: 1rem 0;
+}
+
+ul {
+	padding-left: 1rem;
+}
+
+body {
+	margin: 0 auto;
+	padding: 0 1ch;
+	max-width: 82ch;
+}
+
+/*****************************
+ * Header
+ ****************************/
+header {
+	padding-top: 0.7rem;
+	padding-bottom: 0.2rem;
+	border-bottom: 2px solid #e73e7e;
+}
+
+.site-title {
+	color: #555;
+	font-size: 1.5rem;
+	margin-left: 0.3rem;
+}
+
+a.site-title {
+	text-decoration: none;
+	font-size: rem;
+	line-height: 2rem;
+}
+
+a.site-title:hover {
+	color: #e73e7e;
+}
+
+.site-sub-title {
+	color: #555;
+	font-size: 0.7rem;
+}
+
+/*****************************
+ * Post list
+ ****************************/
+ul.post-list {
+	padding: 0 1rem;
+	color: #555;
+}
+
+ul.post-list {
+	list-style-type: none;
+}
+
+ul.post-list li {
+	display: flex;
+	align-items: baseline;
+}
+
+ul.post-list .separator {
+	flex-grow: 1;
+	border-bottom: 2px dotted gray;
+	margin: 0 0.3rem;
+}
+
+.post-list h2 {
+	font-size: 1.3rem;
+	margin: 0.5rem 0;
+	font-weight: 500;
+}
+
+.post-list a {
+	text-decoration: none;
+	color: #444;
+}
+
+.post-list a:hover {
+	color: #000;
+	text-decoration: underline;
+}
+
