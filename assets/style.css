@@ -4,11 +4,15 @@ h1, h2, h3, ul, li {
 }
 
 p, ul, h1, h2 {
-	margin: 1rem 0;
+	margin-bottom: 1rem;
 }
 
 ul {
 	padding-left: 1rem;
+}
+
+html {
+	line-height: 1.4;
 }
 
 body {
@@ -35,6 +39,7 @@ header {
 	display: flex;
 	align-items: stretch;
 	padding-top: 0.7rem;
+	margin-bottom: 2rem;
 	border-bottom: 2px solid #e73e7e;
 
 	img {
@@ -46,14 +51,10 @@ header {
 
 a {
 	&.site-title {
+		margin-left: 0.3rem;
 		color: #555;
 		font-size: 1.5rem;
-		margin-left: 0.3rem;
-	}
-
-	&.site-title {
 		text-decoration: none;
-		font-size: rem;
 		line-height: 2rem;
 	}
 

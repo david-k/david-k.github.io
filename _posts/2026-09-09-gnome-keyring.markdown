@@ -4,19 +4,18 @@ title:  When software does almost what you want
 date:   2026-09-09
 ---
 
-I want my backup script to fetch the password for the encryption key from a
-password manager, which in this case is `gnome-keyring`. This is won't take
-long.
+I want my backup script to fetch the required password from `gnome-keyring`.
+This won't take long because it's not a difficult task.
 
 I use the [Seahorse](https://gitlab.gnome.org/GNOME/seahorse) GUI to first
-create a new keyring and then add the password to that keyring. Why a new
-keyring? Each keyring is protected by its own password and can be separately
-locked/unlocked. By putting the password into its own keyring I can keep it
-locked most of the time and only unlock it when needed. I just don't like the
-idea that any app can just read all the passwords of my unlocked keyrings all
-the time, so I try to keep the time window small. Does this increase security?
-Not much, any malicious program running as me can already do enough damage, but
-it makes me feel better. I want to feel better.
+create a new keyring and then add the password required by the backup script to
+that keyring. Why a new keyring? Each keyring is protected by its own password
+and can be separately locked/unlocked. By putting the password into its own
+keyring I can keep it locked most of the time and only unlock it when needed. I
+just don't like the idea that any app can just read all the passwords of my
+unlocked keyrings all the time, so I try to keep the time window small. Does
+this increase security?  Not much, any malicious program running as me can
+already do enough damage, but it makes me feel better. I want to feel better.
 
 Once the password is created, I use `secret-tool` (provided by
 [`libsecret`](https://gnome.pages.gitlab.gnome.org/libsecret/)) to access the
