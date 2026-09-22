@@ -14,8 +14,9 @@ and can be separately locked/unlocked. By putting the password into its own
 keyring I can keep it locked most of the time and only unlock it when needed. I
 just don't like the idea that any app can just read all the passwords of my
 unlocked keyrings all the time, so I try to keep the time window small. Does
-this increase security?  Not much, any malicious program running as me can
-already do enough damage, but it makes me feel better. I want to feel better.
+this increase security?  Not much, any malicious program running as with my
+permissions can already do enough damage, but it makes me feel better. I want to
+feel better.
 
 Once the password is created, I use `secret-tool` (provided by
 [`libsecret`](https://gnome.pages.gitlab.gnome.org/libsecret/)) to access the
@@ -65,7 +66,7 @@ attribute `app` with value `Borg` so that I can easily look it up with
 `secret-tool lookup`. However, I get an error that the argument given to
 `--collection` must be a full path. A full path to what?
 
-At first I though I need to provide the full *filesystem path* to the keyring,
+At first I thought I need to provide the full *filesystem path* to the keyring,
 so I tried `~/.local/share/keyrings/Temp_Access.keyring` but that still didn't
 work.
 

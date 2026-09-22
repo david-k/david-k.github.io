@@ -32,6 +32,12 @@ pre {
 	border-top: 1px solid gray;
 }
 
+.post-date {
+	position: relative;
+	top: -0.7rem;
+	color: #555;
+}
+
 /*****************************
  * Header
  ****************************/
