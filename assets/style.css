@@ -17,6 +17,11 @@ body {
 	max-width: 82ch;
 }
 
+.footnotes {
+	margin-top: 2rem;
+	border-top: 1px solid gray;
+}
+
 /*****************************
  * Header
  ****************************/
@@ -27,24 +32,28 @@ header {
 	border-bottom: 2px solid #e73e7e;
 
 	img {
+		/* Image is 71x100 */
 		height: 2.8rem;
+		width: 1.988rem;
 	}
 }
 
-.site-title {
-	color: #555;
-	font-size: 1.5rem;
-	margin-left: 0.3rem;
-}
+a {
+	&.site-title {
+		color: #555;
+		font-size: 1.5rem;
+		margin-left: 0.3rem;
+	}
 
-a.site-title {
-	text-decoration: none;
-	font-size: rem;
-	line-height: 2rem;
-}
+	&.site-title {
+		text-decoration: none;
+		font-size: rem;
+		line-height: 2rem;
+	}
 
-a.site-title:hover {
-	color: #e73e7e;
+	&.site-title:hover {
+		color: #e73e7e;
+	}
 }
 
 .site-sub-title {
@@ -58,36 +67,32 @@ a.site-title:hover {
 ul.post-list {
 	padding: 0 1rem;
 	color: #555;
-}
-
-ul.post-list {
 	list-style-type: none;
-}
 
-ul.post-list li {
-	display: flex;
-	align-items: baseline;
-}
+	li {
+		display: flex;
+		align-items: baseline;
+	}
 
-ul.post-list .separator {
-	flex-grow: 1;
-	border-bottom: 2px dotted gray;
-	margin: 0 0.3rem;
-}
+	h2 {
+		font-size: 1.3rem;
+		margin: 0.5rem 0;
+		font-weight: 500;
+	}
 
-.post-list h2 {
-	font-size: 1.3rem;
-	margin: 0.5rem 0;
-	font-weight: 500;
-}
+	a {
+		text-decoration: none;
+		color: #444;
 
-.post-list a {
-	text-decoration: none;
-	color: #444;
-}
+		&:hover {
+			color: #000;
+			text-decoration: underline;
+		}
+	}
 
-.post-list a:hover {
-	color: #000;
-	text-decoration: underline;
+	.separator {
+		flex-grow: 1;
+		border-bottom: 2px dotted gray;
+		margin: 0 0.3rem;
+	}
 }
-
