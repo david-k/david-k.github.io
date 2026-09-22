@@ -17,6 +17,12 @@ body {
 	max-width: 82ch;
 }
 
+pre {
+	overflow: auto;
+	padding: 0.5rem;
+	background-color: #eee;
+}
+
 .footnotes {
 	margin-top: 2rem;
 	border-top: 1px solid gray;
