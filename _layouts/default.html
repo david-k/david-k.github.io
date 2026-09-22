@@ -3,20 +3,33 @@
 	<head>
 		<meta charset="utf-8">
 		<link rel="stylesheet" href="{{ "/assets/style.css" | relative_url }}">
-		<title>{{ page.title }}</title>
+		<title>
+			{% if page.title %}
+				{{ page.title | escape }}
+			{% else %}
+				{{ site.title | escape }}
+			{% endif %}
+		</title>
 	</head>
 	<body>
 		<header>
 			<img src="{{ "/assets/trees_small.png" | relative_url }}">
 			<div style="display: flex; align-items: flex-end; padding-left: 0.2rem">
 				<span>
-					<a class="site-title" href="/">Tell me I'm wrong.</a>
-					<span class="site-sub-title">And why.</span>
+					<a class="site-title" href="/">{{ site.title | escape }}.</a>
+					{% if site.subtitle %}
+						<span class="site-sub-title">{{ site.subtitle | escape }}</span>
+					{% endif %}
 				</span>
 			</div>
 		</header>
 		<main>
 			{{ content }}
 		</main>
+		<footer>
+			{% if site.email %}
+				<a href="mailto:{{ site.email }}">Contact</a>
+			{% endif %}
+		</footer>
 	</body>
 </html>

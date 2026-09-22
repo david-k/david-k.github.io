@@ -96,3 +96,11 @@ ul.post-list {
 		margin: 0 0.3rem;
 	}
 }
+
+/*****************************
+ * Footer
+ ****************************/
+footer {
+	margin: 3rem 0;
+	text-align: center;
+}

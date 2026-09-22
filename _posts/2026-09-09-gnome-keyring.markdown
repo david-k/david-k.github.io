@@ -4,13 +4,13 @@ title:  When software does almost what you want
 date:   2026-09-09
 ---
 
-I want my backup script to fetch the [Borg](https://www.borgbackup.org/)
-password from a password manager, in this case `gnome-keyring`. This is not
-difficult. This is easy.
+I want my backup script to fetch the password for the encryption key from a
+password manager, which in this case is `gnome-keyring`. This is won't take
+long.
 
-I use the [Seahorse](https://gitlab.gnome.org/GNOME/seahorse) GUI to (1) create
-a new keyring, and (2) add the Borg password to that keyring. Why do the first
-step? Each keyring is protected by its own password and can be separately
+I use the [Seahorse](https://gitlab.gnome.org/GNOME/seahorse) GUI to first
+create a new keyring and then add the password to that keyring. Why a new
+keyring? Each keyring is protected by its own password and can be separately
 locked/unlocked. By putting the password into its own keyring I can keep it
 locked most of the time and only unlock it when needed. I just don't like the
 idea that any app can just read all the passwords of my unlocked keyrings all
@@ -31,12 +31,12 @@ This will display the first password with matching attribute-value pairs.
 
 First obstacle: Even though Seahorse can display the attributes of a password,
 there is no way to add or edit them. The only thing you can do is modify the
-description or the password itself. But `secret-tool` cannot lookup a password
-by its description, and it can also not display all the passwords. You have to
-provide a matching attribute-value pair. Thus, it seems there is no way to use
-`secret-tool` to lookup a password created with Seahorse.
+description or the password itself. Unfortunately, `secret-tool` cannot lookup a
+password by its description, you *have to* provide a matching attribute-value
+pair. Thus, it seems there is no way to use `secret-tool` to lookup a password
+created with Seahorse.
 
-But that's not a big problem, we can just use `secret-tool store` to create a
+But that's not a big problem, we can just use `secret-tool store` to create the
 password:
 
 ```sh
@@ -60,24 +60,23 @@ So let's try this:
 secret-tool store --collection='Temp Access' --label 'Borg' app Borg
 ```
 
-This is supposed to create a password labeled "Borg" in the keyring named "Temp
-Access". Also, the password has an attribute `app` with value `Borg` so that I
-can easily look it up with `secret-tool lookup`. However, I get an error that
-the argument given to `--collection` must be a full path. A full path to what?
+This is supposed to create a password labeled "Borg" (I'm using Borg for
+backups) in the keyring named "Temp Access". Also, the password should have an
+attribute `app` with value `Borg` so that I can easily look it up with
+`secret-tool lookup`. However, I get an error that the argument given to
+`--collection` must be a full path. A full path to what?
 
 At first I though I need to provide the full *filesystem path* to the keyring,
 so I tried `~/.local/share/keyrings/Temp_Access.keyring` but that still didn't
 work.
 
 Turns out that `secret-tool` is basically a wrapper around the DBus interface
-for `gnome-keyring`, and the collection name must be a DBus *object path* that
+of `gnome-keyring`, and the collection name must be a DBus *object path* that
 uniquely identifies the keyring. So how do we get that object path?
 
-After reading the [`gnome-keyring` DBus interface][gnome-keyring-dbus] and
-coming across the `dbus-send` utility for sending DBus messages I came up with
-the following to list the object paths of all keyrings:
-
-[gnome-keyring-dbus]: https://gitlab.gnome.org/GNOME/gnome-keyring/-/blob/main/daemon/dbus/org.freedesktop.Secrets.xml
+After reading about the [`gnome-keyring` DBus interface][gnome-keyring-dbus] and
+the `dbus-send` utility for sending DBus messages I came up with the following
+command to list the object paths of all keyrings:
 
 ```sh
 dbus-send --dest=org.freedesktop.secrets --type=method_call --print-reply \
@@ -86,6 +85,8 @@ dbus-send --dest=org.freedesktop.secrets --type=method_call --print-reply \
     string:org.freedesktop.Secret.Service \
     string:Collections
 ```
+
+[gnome-keyring-dbus]: https://gitlab.gnome.org/GNOME/gnome-keyring/-/blob/main/daemon/dbus/org.freedesktop.Secrets.xml
 
 Turns out, the object path for "Temp Access" is
 `/org/freedesktop/secrets/collection/Temp_5fAccess`. Thus, I can finally add my
@@ -104,7 +105,11 @@ Lookup searches all keyrings so no `--collection` argument needed:
 secret-tool lookup app Borg
 ```
 
-I really wish Seahorse would allow me to edit the attributes of a password. And
-I really wish `secret-tool --collection` would accept the display name of the
-keyring and not its DBus object path. As of now, they both do *almost* what I
+And that's it. I really wish Seahorse would allow me to edit the attributes of a
+password (related [issue][seahorse-issue]). And I really wish `secret-tool
+--collection` would accept the display name of the keyring and not its DBus
+object path ([issue][libsecret-issue]). As of now, they both do *almost* what I
 want.
+
+[seahorse-issue]: https://gitlab.gnome.org/GNOME/seahorse/-/work_items/367
+[libsecret-issue]: https://gitlab.gnome.org/GNOME/libsecret/-/work_items/112
