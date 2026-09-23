@@ -46,13 +46,13 @@ secret-tool store --label='label' attribute value ...
 This creates a new password (read from stdin) with the provided description (aka
 label) and attribute-value pairs.
 
-~~Minor obstacle: `secret-tool store` stores the password in the default keyring
-and there is no argument to override this. At least no documented argument.
-However, looking at the source code reveals that it accepts a `--collection`
-argument that can be used to specify the desired keyring.~~
+Minor obstacle: `secret-tool store` stores the password in the default keyring
+and there is no documented way to override this. However, looking at the source
+code reveals that it accepts a `--collection` argument that can be used to
+specify the desired keyring.
 
-EDIT: As of version 0.21.8 (released 2026-09-12), the `--collection` argument is
-now documented.
+**UPDATE:** As of version 0.21.8 (released 2026-09-12), the `--collection`
+argument is now documented.
 
 So let's try this:
 
@@ -60,23 +60,21 @@ So let's try this:
 secret-tool store --collection='Temp Access' --label 'Borg' app Borg
 ```
 
-This is supposed to create a password labeled "Borg" (I'm using Borg for
-backups) in the keyring named "Temp Access". Also, the password should have an
-attribute `app` with value `Borg` so that I can easily look it up with
-`secret-tool lookup`. However, I get an error that the argument given to
-`--collection` must be a full path. A full path to what?
+This creates a password labeled "Borg" (which is the backup tool I use) in the
+keyring named "Temp Access". Also, the password has an attribute `app` with
+value `Borg` so that I can easily look it up with `secret-tool lookup`.
 
-At first I thought I need to provide the full *filesystem path* to the keyring,
-so I tried `~/.local/share/keyrings/Temp_Access.keyring` but that still didn't
-work.
-
-Turns out that `secret-tool` is basically a wrapper around the DBus interface
-of `gnome-keyring`, and the collection name must be a DBus *object path* that
-uniquely identifies the keyring. So how do we get that object path?
+Next obstacle: The above command actually results in an error saying that the
+argument given to `--collection` must be a full path. A full path to what? At
+first I thought I need to provide the full *filesystem path* to the keyring, so
+I tried `~/.local/share/keyrings/Temp_Access.keyring` but that still didn't
+work. Turns out that `secret-tool` is basically a wrapper around the DBus
+interface of `gnome-keyring`, and the collection name must be a DBus *object
+path* that uniquely identifies the keyring. So how do we get that object path?
 
 After reading about the [`gnome-keyring` DBus interface][gnome-keyring-dbus] and
 the `dbus-send` utility for sending DBus messages I came up with the following
-command to list the object paths of all keyrings:
+command to list the object paths of all available keyrings:
 
 ```sh
 dbus-send --dest=org.freedesktop.secrets --type=method_call --print-reply \
