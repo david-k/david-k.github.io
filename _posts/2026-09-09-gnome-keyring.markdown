@@ -1,6 +1,6 @@
 ---
 layout: post
-title:  When software does almost what you want
+title:  Software that does almost what you want
 date:   2026-09-09
 ---
 
